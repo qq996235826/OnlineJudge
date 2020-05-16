@@ -9,8 +9,9 @@ install:
     - ./init_db.sh
 script:
     - docker ps -a
-    - flake8 .
-    - coverage run --include="$PWD/*" manage.py test
-    - coverage report
+    - echo "$DOCKER_PASSWORD" | docker login --username=hansybx registry.cn-hangzhou.aliyuncs.com --password-stdin
+    - docker build -t registry.cn-hangzhou.aliyuncs.com/oj-just/oj-backend:latest .
+    - docker images
+    - docker push registry.cn-hangzhou.aliyuncs.com/oj-just/oj-backend:latest
 notifications:
     slack: onlinejudgeteam:BzBz8UFgmS5crpiblof17K2W
